@@ -1,0 +1,347 @@
+[gd_scene load_steps=2 format=3 uid="uid://c47gp3qy815ba"]
+
+[ext_resource type="Script" uid="uid://cxteq20h57h1m" path="res://Scenes/settings.gd" id="1_lrwpk"]
+
+[node name="Settings" type="Control"]
+custom_minimum_size = Vector2(640, 640)
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 520.0
+offset_bottom = 520.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+script = ExtResource("1_lrwpk")
+
+[node name="TabContainer" type="TabContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+current_tab = 0
+
+[node name="Ollama" type="TabBar" parent="TabContainer"]
+layout_mode = 2
+metadata/_tab_index = 0
+
+[node name="MarginContainer" type="MarginContainer" parent="TabContainer/Ollama"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 32
+theme_override_constants/margin_top = 32
+theme_override_constants/margin_right = 32
+theme_override_constants/margin_bottom = 32
+
+[node name="VBoxContainer" type="VBoxContainer" parent="TabContainer/Ollama/MarginContainer"]
+layout_mode = 2
+
+[node name="ModelLabel" type="Label" parent="TabContainer/Ollama/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "MODEL"
+
+[node name="ItemList" type="ItemList" parent="TabContainer/Ollama/MarginContainer/VBoxContainer"]
+layout_mode = 2
+auto_height = true
+
+[node name="ServerLabel" type="Label" parent="TabContainer/Ollama/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "SERVER"
+
+[node name="ServerEdit" type="LineEdit" parent="TabContainer/Ollama/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "http://127.0.0.1:11434/"
+placeholder_text = "http://127.0.0.1:11434/"
+
+[node name="HSeparator" type="HSeparator" parent="TabContainer/Ollama/MarginContainer/VBoxContainer"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="SaveButton" type="Button" parent="TabContainer/Ollama/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "SAVE"
+
+[node name="HTTPRequest" type="HTTPRequest" parent="TabContainer/Ollama"]
+timeout = 2.0
+
+[node name="Interface" type="TabBar" parent="TabContainer"]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="TabContainer/Interface"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 32
+theme_override_constants/margin_top = 32
+theme_override_constants/margin_right = 32
+theme_override_constants/margin_bottom = 32
+
+[node name="VBoxContainer" type="VBoxContainer" parent="TabContainer/Interface/MarginContainer"]
+layout_mode = 2
+
+[node name="LanguageLabel" type="Label" parent="TabContainer/Interface/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "LANGUAGE"
+
+[node name="ItemList" type="ItemList" parent="TabContainer/Interface/MarginContainer/VBoxContainer"]
+layout_mode = 2
+auto_height = true
+item_count = 2
+item_0/text = "English"
+item_1/text = "Español"
+
+[node name="CheckButtonVertical" type="CheckButton" parent="TabContainer/Interface/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "VERTICAL"
+
+[node name="CheckButtonHorizontal" type="CheckButton" parent="TabContainer/Interface/MarginContainer/VBoxContainer"]
+layout_mode = 2
+button_pressed = true
+text = "HORIZONTAL"
+
+[node name="TimerLabel" type="Label" parent="TabContainer/Interface/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "TIMER"
+
+[node name="SpinBox" type="SpinBox" parent="TabContainer/Interface/MarginContainer/VBoxContainer"]
+layout_mode = 2
+min_value = 1.0
+value = 1.0
+allow_greater = true
+
+[node name="HBoxContainer" type="HBoxContainer" parent="TabContainer/Interface/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="ResolutionLabel" type="Label" parent="TabContainer/Interface/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "RESOLUTION"
+
+[node name="Resolution" type="Label" parent="TabContainer/Interface/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="ResolutionHSlider" type="HSlider" parent="TabContainer/Interface/MarginContainer/VBoxContainer"]
+layout_mode = 2
+min_value = 40.0
+max_value = 800.0
+step = 10.0
+value = 120.0
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="TabContainer/Interface/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="ScaleLabel" type="Label" parent="TabContainer/Interface/MarginContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+text = "SCALE"
+
+[node name="Scale" type="Label" parent="TabContainer/Interface/MarginContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+
+[node name="ScaleHSlider" type="HSlider" parent="TabContainer/Interface/MarginContainer/VBoxContainer"]
+layout_mode = 2
+min_value = 1.0
+max_value = 10.0
+value = 1.0
+
+[node name="ThinkCheckButton" type="CheckButton" parent="TabContainer/Interface/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "SHOWTHINK"
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="TabContainer/Interface/MarginContainer/VBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="TabContainer/Interface/MarginContainer/VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+text = "COMPLETE RESPONSE"
+
+[node name="ResponseCheckButton" type="CheckButton" parent="TabContainer/Interface/MarginContainer/VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+
+[node name="Label2" type="Label" parent="TabContainer/Interface/MarginContainer/VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+text = "CHUNKED RESPONSE"
+
+[node name="HSeparator" type="HSeparator" parent="TabContainer/Interface/MarginContainer/VBoxContainer"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="SaveInterfaceButton" type="Button" parent="TabContainer/Interface/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "SAVE"
+
+[node name="Prompt" type="TabBar" parent="TabContainer"]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="TabContainer/Prompt"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 32
+theme_override_constants/margin_top = 32
+theme_override_constants/margin_right = 32
+theme_override_constants/margin_bottom = 32
+
+[node name="VBoxContainer" type="VBoxContainer" parent="TabContainer/Prompt/MarginContainer"]
+layout_mode = 2
+
+[node name="InstructionalPromptLabel" type="Label" parent="TabContainer/Prompt/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+text = "INSTRUCTIONAL PROMPT"
+autowrap_mode = 3
+
+[node name="InstructionalPromptText" type="TextEdit" parent="TabContainer/Prompt/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+placeholder_text = "INSTRUCTIONAL PROMPT TEXT"
+wrap_mode = 1
+
+[node name="HSeparator" type="HSeparator" parent="TabContainer/Prompt/MarginContainer/VBoxContainer"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="SavePromptButton" type="Button" parent="TabContainer/Prompt/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "SAVE"
+
+[node name="TTS" type="TabBar" parent="TabContainer"]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="TabContainer/TTS"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 32
+theme_override_constants/margin_top = 32
+theme_override_constants/margin_right = 32
+theme_override_constants/margin_bottom = 32
+
+[node name="VBoxContainer" type="VBoxContainer" parent="TabContainer/TTS/MarginContainer"]
+layout_mode = 2
+
+[node name="CheckButton" type="CheckButton" parent="TabContainer/TTS/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "TTS STATUS"
+
+[node name="EmptyVoicesListLabel" type="Label" parent="TabContainer/TTS/MarginContainer/VBoxContainer"]
+visible = false
+layout_mode = 2
+text = "VOICES LIST EMPTY"
+
+[node name="VoicesItemList" type="ItemList" parent="TabContainer/TTS/MarginContainer/VBoxContainer"]
+layout_mode = 2
+auto_height = true
+
+[node name="HBoxContainer" type="HBoxContainer" parent="TabContainer/TTS/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="TabContainer/TTS/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "RATE"
+
+[node name="Rate" type="Label" parent="TabContainer/TTS/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "1.0 x"
+
+[node name="RateHSlider" type="HSlider" parent="TabContainer/TTS/MarginContainer/VBoxContainer"]
+layout_mode = 2
+min_value = 0.1
+max_value = 10.0
+step = 0.05
+value = 1.0
+exp_edit = true
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="TabContainer/TTS/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="TabContainer/TTS/MarginContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+text = "PITCH"
+
+[node name="Pitch" type="Label" parent="TabContainer/TTS/MarginContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+text = "1.0 x"
+
+[node name="PitchHSlider" type="HSlider" parent="TabContainer/TTS/MarginContainer/VBoxContainer"]
+layout_mode = 2
+max_value = 2.0
+step = 0.05
+value = 1.0
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="TabContainer/TTS/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="TabContainer/TTS/MarginContainer/VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+text = "VOLUME"
+
+[node name="Volume" type="Label" parent="TabContainer/TTS/MarginContainer/VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+text = "50 %"
+
+[node name="VolumeHSlider" type="HSlider" parent="TabContainer/TTS/MarginContainer/VBoxContainer"]
+layout_mode = 2
+min_value = 1.0
+value = 50.0
+
+[node name="TextEdit" type="TextEdit" parent="TabContainer/TTS/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+
+[node name="TestVoiceButton" type="Button" parent="TabContainer/TTS/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "TEST VOICE"
+
+[node name="HSeparator" type="HSeparator" parent="TabContainer/TTS/MarginContainer/VBoxContainer"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="SaveTTSButton" type="Button" parent="TabContainer/TTS/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "SAVE"
+
+[node name="AcceptDialog" type="AcceptDialog" parent="."]
+auto_translate_mode = 1
+title = "Error"
+initial_position = 4
+transient = false
+always_on_top = true
+
+[connection signal="draw" from="." to="." method="_on_draw"]
+[connection signal="pressed" from="TabContainer/Ollama/MarginContainer/VBoxContainer/SaveButton" to="." method="_on_save_button_pressed"]
+[connection signal="request_completed" from="TabContainer/Ollama/HTTPRequest" to="." method="_on_http_request_request_completed"]
+[connection signal="value_changed" from="TabContainer/Interface/MarginContainer/VBoxContainer/ResolutionHSlider" to="." method="_on_resolution_h_slider_value_changed"]
+[connection signal="value_changed" from="TabContainer/Interface/MarginContainer/VBoxContainer/ScaleHSlider" to="." method="_on_scale_h_slider_value_changed"]
+[connection signal="pressed" from="TabContainer/Interface/MarginContainer/VBoxContainer/SaveInterfaceButton" to="." method="_on_save_interface_button_pressed"]
+[connection signal="pressed" from="TabContainer/Prompt/MarginContainer/VBoxContainer/SavePromptButton" to="." method="_on_save_prompt_button_pressed"]
+[connection signal="value_changed" from="TabContainer/TTS/MarginContainer/VBoxContainer/RateHSlider" to="." method="_on_rate_h_slider_value_changed"]
+[connection signal="value_changed" from="TabContainer/TTS/MarginContainer/VBoxContainer/PitchHSlider" to="." method="_on_pitch_h_slider_value_changed"]
+[connection signal="value_changed" from="TabContainer/TTS/MarginContainer/VBoxContainer/VolumeHSlider" to="." method="_on_volume_h_slider_value_changed"]
+[connection signal="pressed" from="TabContainer/TTS/MarginContainer/VBoxContainer/TestVoiceButton" to="." method="_on_test_voice_button_pressed"]
+[connection signal="pressed" from="TabContainer/TTS/MarginContainer/VBoxContainer/SaveTTSButton" to="." method="_on_save_tts_button_pressed"]

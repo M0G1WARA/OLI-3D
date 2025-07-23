@@ -1,0 +1,87 @@
+[gd_scene load_steps=2 format=3 uid="uid://b2juxdcs72sgg"]
+
+[ext_resource type="Script" uid="uid://dmartv1jl5kc5" path="res://Scenes/chat.gd" id="1_pheuq"]
+
+[node name="Chat" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_pheuq")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Prompt" type="TextEdit" parent="VBoxContainer"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+placeholder_text = "MESSAGE"
+wrap_mode = 1
+
+[node name="SendButton" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "SEND"
+
+[node name="ProgressBar" type="ProgressBar" parent="VBoxContainer/SendButton"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+show_percentage = false
+indeterminate = true
+editor_preview_indeterminate = true
+
+[node name="ThinkLabel" type="Label" parent="VBoxContainer"]
+visible = false
+layout_mode = 2
+text = "THINK"
+
+[node name="Think" type="TextEdit" parent="VBoxContainer"]
+visible = false
+custom_minimum_size = Vector2(0, 80)
+layout_mode = 2
+size_flags_vertical = 3
+editable = false
+context_menu_enabled = false
+drag_and_drop_selection_enabled = false
+virtual_keyboard_enabled = false
+middle_mouse_paste_enabled = false
+wrap_mode = 1
+
+[node name="ResponseLabel" type="Label" parent="VBoxContainer"]
+visible = false
+layout_mode = 2
+text = "RESPONSE"
+
+[node name="Response" type="TextEdit" parent="VBoxContainer"]
+custom_minimum_size = Vector2(0, 80)
+layout_mode = 2
+size_flags_vertical = 3
+context_menu_enabled = false
+drag_and_drop_selection_enabled = false
+virtual_keyboard_enabled = false
+middle_mouse_paste_enabled = false
+wrap_mode = 1
+
+[node name="HTTPRequest" type="HTTPRequest" parent="."]
+
+[node name="AcceptDialog" type="AcceptDialog" parent="."]
+title = "Error"
+initial_position = 4
+transient = false
+always_on_top = true
+
+[connection signal="draw" from="." to="." method="_on_draw"]
+[connection signal="text_changed" from="VBoxContainer/Prompt" to="." method="_on_prompt_text_changed"]
+[connection signal="pressed" from="VBoxContainer/SendButton" to="." method="_on_send_button_pressed"]
+[connection signal="request_completed" from="HTTPRequest" to="." method="_on_http_request_request_completed"]

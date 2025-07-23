@@ -1,0 +1,50 @@
+[gd_scene load_steps=4 format=3 uid="uid://c4fgma0mcbnsd"]
+
+[ext_resource type="Script" uid="uid://bfoxnijxv34vr" path="res://Scenes/main.gd" id="1_3b20u"]
+[ext_resource type="PackedScene" uid="uid://c47gp3qy815ba" path="res://Scenes/settings.tscn" id="3_785w6"]
+[ext_resource type="PackedScene" uid="uid://b2juxdcs72sgg" path="res://Scenes/chat.tscn" id="4_6wrs5"]
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1_3b20u")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+visible = false
+custom_minimum_size = Vector2(120, 120)
+
+[node name="Timer" type="Timer" parent="."]
+one_shot = true
+autostart = true
+
+[node name="PopupMenu" type="PopupMenu" parent="."]
+item_count = 2
+item_0/text = "SETTINGS"
+item_0/id = 1
+item_1/text = "EXIT"
+item_1/id = 2
+
+[node name="SettingsWindow" type="Window" parent="."]
+title = "SETTINGS"
+initial_position = 4
+size = Vector2i(640, 640)
+visible = false
+always_on_top = true
+
+[node name="Settings" parent="SettingsWindow" instance=ExtResource("3_785w6")]
+offset_right = 0.0
+offset_bottom = 0.0
+
+[node name="ChatWindow" type="Window" parent="."]
+transparent_bg = true
+title = "Chat"
+size = Vector2i(120, 120)
+visible = false
+borderless = true
+always_on_top = true
+transparent = true
+
+[node name="Chat" parent="ChatWindow" instance=ExtResource("4_6wrs5")]
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="id_pressed" from="PopupMenu" to="." method="_on_popup_menu_id_pressed"]
+[connection signal="visibility_changed" from="PopupMenu" to="." method="_on_popup_menu_visibility_changed"]
+[connection signal="close_requested" from="SettingsWindow" to="." method="_on_settings_window_close_requested"]
