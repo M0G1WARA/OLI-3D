@@ -95,6 +95,7 @@ func _on_draw():
 	load_interface_settings()
 	load_prompt_settings()
 	load_tts_settings()
+	load_3d_settings()
 
 
 func _on_save_prompt_button_pressed():
@@ -173,4 +174,32 @@ func _on_save_tts_button_pressed() -> void:
 	Global.settings["tts"]["volume"] = $TabContainer/TTS/MarginContainer/VBoxContainer/VolumeHSlider.value
 	Global.settings["tts"]["pitch"] = $TabContainer/TTS/MarginContainer/VBoxContainer/PitchHSlider.value
 	Global.settings["tts"]["text"] =$TabContainer/TTS/MarginContainer/VBoxContainer/TextEdit.text
+	Global.save_config()
+
+func load_3d_settings():
+	
+	var dir = DirAccess.open("res://Assets/Shaders")
+	dir.list_dir_begin()
+	var file_name = dir.get_next()
+	while file_name != "":
+		if file_name.ends_with(".gdshader"):
+			$"TabContainer/3D/MarginContainer/VBoxContainer/ShaderOptionButton".add_item(file_name)
+		file_name = dir.get_next()
+	dir.list_dir_end()
+	
+	if Global.settings["model"]["shader"] == "None":
+		$"TabContainer/3D/MarginContainer/VBoxContainer/ShaderOptionButton".selected = 0
+	else:
+		for i in range($"TabContainer/3D/MarginContainer/VBoxContainer/ShaderOptionButton".get_item_count()):
+			if $"TabContainer/3D/MarginContainer/VBoxContainer/ShaderOptionButton".get_item_text(i) == Global.settings["model"]["shader"]:
+				$"TabContainer/3D/MarginContainer/VBoxContainer/ShaderOptionButton".select(i)
+				break
+
+
+func _on_save_3d_button_pressed():
+	if $"TabContainer/3D/MarginContainer/VBoxContainer/ShaderOptionButton".get_selected_id() == 0:
+		Global.settings["model"]["shader"] = "None"
+	else:
+		Global.settings["model"]["shader"] =$"TabContainer/3D/MarginContainer/VBoxContainer/ShaderOptionButton".get_item_text($"TabContainer/3D/MarginContainer/VBoxContainer/ShaderOptionButton".get_selected_id())
+		
 	Global.save_config()

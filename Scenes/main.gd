@@ -24,12 +24,18 @@ func _ready():
 	$Node3D.add_child(modelInstance)
 	animation_player = modelInstance.get_node("AnimationPlayer")
 	
+	if Global.settings["model"]["shader"] != "None" :
+		apply_shader_to_meshes(modelInstance)
 
 
-	
-
-
-
+func apply_shader_to_meshes(node: Node):
+	if node is MeshInstance3D:
+		var shaderMaterial = ShaderMaterial.new()
+		shaderMaterial.shader = load("res://Assets/Shaders/"+Global.settings["model"]["shader"])
+		node.material_override = shaderMaterial
+		
+	for child in node.get_children():
+		apply_shader_to_meshes(child)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):

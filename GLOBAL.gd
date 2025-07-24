@@ -27,6 +27,9 @@ var settings = {
 		"pitch": 1.0,
 		"rate": 1.0,
 		"text": "",
+	},
+	"model":{
+		"shader": "None"
 	}
 }
 
@@ -62,6 +65,7 @@ func _ready():
 	english_translation.add_message("VOICES LIST EMPTY", "Si eres usuario linux, tu sistema necesita bibliotecas (speech-dispatcher festival espeakup) para que TTS funcione.")
 	english_translation.add_message("ERROR EMPTY TEXT", "Text is empty")
 	english_translation.add_message("ERROR SELECTED VOICE", "Select a voice from the list")
+	english_translation.add_message("SHADER OPTION", "None")
 	english_translation.add_message("SAVE", "Save")
 	
 	english_translation.add_message("ERROR JSON", "JSON parse error: ")
@@ -105,6 +109,7 @@ func _ready():
 	spanish_translation.add_message("VOICES LIST EMPTY", "Si eres usuario de Linux, tu sistema necesita bibliotecas (speech-dispatcher, festival, espeakup) para que TTS funcione.")
 	spanish_translation.add_message("ERROR EMPTY TEXT", "El texto está vacío")
 	spanish_translation.add_message("ERROR SELECTED VOICE", "Selecciona una voz de la lista")
+	spanish_translation.add_message("SHADER OPTION", "Ninguno")
 	spanish_translation.add_message("SAVE", "Guardar")
 	
 	spanish_translation.add_message("ERROR JSON", "Error al analizar JSON: ")
@@ -135,6 +140,7 @@ func load_config():
 					settings[category][key] = config.get_value(category, key, settings[category][key])
 		TranslationServer.set_locale(settings["interface"]["language"])
 		DisplayServer.window_set_size(settings["interface"]["resolution"])
+
 		
 	else:
 		save_config()
