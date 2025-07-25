@@ -356,6 +356,45 @@ item_count = 1
 popup/item_0/text = "SHADER OPTION"
 popup/item_0/id = 0
 
+[node name="HBoxContainer" type="HBoxContainer" parent="TabContainer/3D/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="TabContainer/3D/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "CUSTOM MODEL"
+
+[node name="SelectButton" type="Button" parent="TabContainer/3D/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "SELECT MODEL"
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="TabContainer/3D/MarginContainer/VBoxContainer"]
+visible = false
+layout_mode = 2
+
+[node name="CustomModelTextEdit" type="TextEdit" parent="TabContainer/3D/MarginContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+editable = false
+emoji_menu_enabled = false
+scroll_fit_content_height = true
+
+[node name="ClearButton" type="Button" parent="TabContainer/3D/MarginContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+text = "CLEAR MODEL"
+
+[node name="FileDialog" type="FileDialog" parent="TabContainer/3D/MarginContainer/VBoxContainer"]
+title = "SELECT MODEL"
+initial_position = 4
+wrap_controls = false
+transient = false
+exclusive = false
+always_on_top = true
+ok_button_text = "SELECT MODEL"
+file_mode = 0
+access = 2
+filters = PackedStringArray("*.glb")
+use_native_dialog = true
+
 [node name="HSeparator" type="HSeparator" parent="TabContainer/3D/MarginContainer/VBoxContainer"]
 modulate = Color(1, 1, 1, 0)
 layout_mode = 2
@@ -384,4 +423,7 @@ always_on_top = true
 [connection signal="value_changed" from="TabContainer/TTS/MarginContainer/VBoxContainer/VolumeHSlider" to="." method="_on_volume_h_slider_value_changed"]
 [connection signal="pressed" from="TabContainer/TTS/MarginContainer/VBoxContainer/TestVoiceButton" to="." method="_on_test_voice_button_pressed"]
 [connection signal="pressed" from="TabContainer/TTS/MarginContainer/VBoxContainer/SaveTTSButton" to="." method="_on_save_tts_button_pressed"]
+[connection signal="pressed" from="TabContainer/3D/MarginContainer/VBoxContainer/HBoxContainer/SelectButton" to="." method="_on_select_button_pressed"]
+[connection signal="pressed" from="TabContainer/3D/MarginContainer/VBoxContainer/HBoxContainer2/ClearButton" to="." method="_on_clear_button_pressed"]
+[connection signal="file_selected" from="TabContainer/3D/MarginContainer/VBoxContainer/FileDialog" to="." method="_on_file_dialog_file_selected"]
 [connection signal="pressed" from="TabContainer/3D/MarginContainer/VBoxContainer/Save3DButton" to="." method="_on_save_3d_button_pressed"]

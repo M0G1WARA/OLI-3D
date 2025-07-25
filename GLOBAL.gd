@@ -29,7 +29,8 @@ var settings = {
 		"text": "",
 	},
 	"model":{
-		"shader": "None"
+		"shader": "None",
+		"custom model": ""
 	}
 }
 
@@ -66,6 +67,9 @@ func _ready():
 	english_translation.add_message("ERROR EMPTY TEXT", "Text is empty")
 	english_translation.add_message("ERROR SELECTED VOICE", "Select a voice from the list")
 	english_translation.add_message("SHADER OPTION", "None")
+	english_translation.add_message("CUSTOM MODEL", "Custom 3D model")
+	english_translation.add_message("CLEAR MODEL", "Clear custom 3D model")
+	english_translation.add_message("SELECT MODEL", "Select custom 3D model")
 	english_translation.add_message("SAVE", "Save")
 	
 	english_translation.add_message("ERROR JSON", "JSON parse error: ")
@@ -110,6 +114,9 @@ func _ready():
 	spanish_translation.add_message("ERROR EMPTY TEXT", "El texto está vacío")
 	spanish_translation.add_message("ERROR SELECTED VOICE", "Selecciona una voz de la lista")
 	spanish_translation.add_message("SHADER OPTION", "Ninguno")
+	spanish_translation.add_message("CUSTOM MODEL", "Modelo 3D personalizado")
+	spanish_translation.add_message("CLEAR MODEL", "Borrar modelo 3D personalizado")
+	spanish_translation.add_message("SELECT MODEL", "Seleccionar modelo 3D personalizado")
 	spanish_translation.add_message("SAVE", "Guardar")
 	
 	spanish_translation.add_message("ERROR JSON", "Error al analizar JSON: ")

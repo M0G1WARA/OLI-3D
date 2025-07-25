@@ -194,6 +194,10 @@ func load_3d_settings():
 			if $"TabContainer/3D/MarginContainer/VBoxContainer/ShaderOptionButton".get_item_text(i) == Global.settings["model"]["shader"]:
 				$"TabContainer/3D/MarginContainer/VBoxContainer/ShaderOptionButton".select(i)
 				break
+	
+	if Global.settings["model"]["custom model"] != "":
+		$"TabContainer/3D/MarginContainer/VBoxContainer/HBoxContainer2/CustomModelTextEdit".text = Global.settings["model"]["custom model"]
+		$"TabContainer/3D/MarginContainer/VBoxContainer/HBoxContainer2".show()
 
 
 func _on_save_3d_button_pressed():
@@ -201,5 +205,40 @@ func _on_save_3d_button_pressed():
 		Global.settings["model"]["shader"] = "None"
 	else:
 		Global.settings["model"]["shader"] =$"TabContainer/3D/MarginContainer/VBoxContainer/ShaderOptionButton".get_item_text($"TabContainer/3D/MarginContainer/VBoxContainer/ShaderOptionButton".get_selected_id())
-		
+	
+	Global.settings["model"]["custom model"] = $"TabContainer/3D/MarginContainer/VBoxContainer/HBoxContainer2/CustomModelTextEdit".text
+	
 	Global.save_config()
+	
+	await get_tree().create_timer(0.2).timeout
+	get_tree().reload_current_scene()
+
+
+func _on_file_dialog_file_selected(path):
+	$"TabContainer/3D/MarginContainer/VBoxContainer/HBoxContainer2".show()
+	var file_name = path.get_file()
+	var destination_path = "user://"+file_name
+
+	var file = FileAccess.open(path, FileAccess.READ)
+	if file:
+		var file_copy = FileAccess.open(destination_path, FileAccess.WRITE)
+		if file_copy:
+			var content = file.get_buffer(file.get_length()) 
+			file_copy.store_buffer(content)
+		else:
+			file.close()
+
+	
+	$"TabContainer/3D/MarginContainer/VBoxContainer/HBoxContainer2/CustomModelTextEdit".text = file_name
+
+func _on_select_button_pressed():
+	$"TabContainer/3D/MarginContainer/VBoxContainer/FileDialog".show()
+
+func _on_clear_button_pressed():
+	var file_path = "user://"+$"TabContainer/3D/MarginContainer/VBoxContainer/HBoxContainer2/CustomModelTextEdit".text
+	var dir_access = DirAccess.open(file_path.get_base_dir())
+	if dir_access:
+		dir_access.remove(file_path.get_file())
+		dir_access = null
+	$"TabContainer/3D/MarginContainer/VBoxContainer/HBoxContainer2/CustomModelTextEdit".text = ""
+	$"TabContainer/3D/MarginContainer/VBoxContainer/HBoxContainer2".hide()
