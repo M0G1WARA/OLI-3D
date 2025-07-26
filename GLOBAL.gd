@@ -30,7 +30,10 @@ var settings = {
 	},
 	"model":{
 		"shader": "None",
-		"custom model": ""
+		"custom model": "",
+		"camera x": 0,
+		"camera y": 0,
+		"camera z": 130,
 	}
 }
 
@@ -72,6 +75,9 @@ func _ready():
 	english_translation.add_message("SELECT MODEL", "Select custom 3D model")
 	english_translation.add_message("ERROR COPY MODEL", "Failed to copy the 3D model.")
 	english_translation.add_message("ERROR MODEL FILE", "The 3D model file is invalid or corrupted.")
+	english_translation.add_message("CAMERAX", "Camera's horizontal position (X-axis).")
+	english_translation.add_message("CAMERAY", "Camera's vertical position (Y-axis).")
+	english_translation.add_message("CAMERAZ", "Camera's depth position (Z-axis).")
 	english_translation.add_message("SAVE", "Save")
 	
 	english_translation.add_message("ERROR JSON", "JSON parse error: ")
@@ -119,8 +125,11 @@ func _ready():
 	spanish_translation.add_message("CUSTOM MODEL", "Modelo 3D personalizado")
 	spanish_translation.add_message("CLEAR MODEL", "Borrar modelo 3D personalizado")
 	spanish_translation.add_message("SELECT MODEL", "Seleccionar modelo 3D personalizado")
-	english_translation.add_message("ERROR COPY MODEL", "No se pudo copiar el modelo 3D.")
-	english_translation.add_message("ERROR MODEL FILE", "El archivo del modelo 3D no es válido o está dañado.")
+	spanish_translation.add_message("ERROR COPY MODEL", "No se pudo copiar el modelo 3D.")
+	spanish_translation.add_message("ERROR MODEL FILE", "El archivo del modelo 3D no es válido o está dañado.")
+	spanish_translation.add_message("CAMERAX", "Posición horizontal de la cámara (Eje X).")
+	spanish_translation.add_message("CAMERAY", "Posición vertical de la cámara (Eje Y).")
+	spanish_translation.add_message("CAMERAZ", "Posición de profundidad de la cámara (Eje Z).")
 	spanish_translation.add_message("SAVE", "Guardar")
 	
 	spanish_translation.add_message("ERROR JSON", "Error al analizar JSON: ")

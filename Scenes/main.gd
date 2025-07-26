@@ -45,6 +45,10 @@ func _ready():
 	
 	if Global.settings["model"]["shader"] != "None" :
 		apply_shader_to_meshes(modelInstance)
+	
+	$Node3D/Camera3D.position.x = Global.settings["model"]["camera x"]
+	$Node3D/Camera3D.position.y = Global.settings["model"]["camera y"]
+	$Node3D/Camera3D.position.z = Global.settings["model"]["camera z"]
 
 
 func apply_shader_to_meshes(node: Node):

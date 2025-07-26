@@ -198,6 +198,10 @@ func load_3d_settings():
 	if Global.settings["model"]["custom model"] != "":
 		$"TabContainer/3D/MarginContainer/VBoxContainer/HBoxContainer2/CustomModelTextEdit".text = Global.settings["model"]["custom model"]
 		$"TabContainer/3D/MarginContainer/VBoxContainer/HBoxContainer2".show()
+	
+	$"TabContainer/3D/MarginContainer/VBoxContainer/CameraXHSlider".value = Global.settings["model"]["camera x"]
+	$"TabContainer/3D/MarginContainer/VBoxContainer/CameraYHSlider".value = Global.settings["model"]["camera y"]
+	$"TabContainer/3D/MarginContainer/VBoxContainer/CameraZHSlider".value = Global.settings["model"]["camera z"]
 
 
 func _on_save_3d_button_pressed():
@@ -207,6 +211,10 @@ func _on_save_3d_button_pressed():
 		Global.settings["model"]["shader"] =$"TabContainer/3D/MarginContainer/VBoxContainer/ShaderOptionButton".get_item_text($"TabContainer/3D/MarginContainer/VBoxContainer/ShaderOptionButton".get_selected_id())
 	
 	Global.settings["model"]["custom model"] = $"TabContainer/3D/MarginContainer/VBoxContainer/HBoxContainer2/CustomModelTextEdit".text
+	
+	Global.settings["model"]["camera x"] = $"TabContainer/3D/MarginContainer/VBoxContainer/CameraXHSlider".value
+	Global.settings["model"]["camera y"] = $"TabContainer/3D/MarginContainer/VBoxContainer/CameraYHSlider".value
+	Global.settings["model"]["camera z"] = $"TabContainer/3D/MarginContainer/VBoxContainer/CameraZHSlider".value
 	
 	Global.save_config()
 	
@@ -247,3 +255,21 @@ func _on_clear_button_pressed():
 		dir_access = null
 	$"TabContainer/3D/MarginContainer/VBoxContainer/HBoxContainer2/CustomModelTextEdit".text = ""
 	$"TabContainer/3D/MarginContainer/VBoxContainer/HBoxContainer2".hide()
+
+
+func _on_camera_xh_slider_value_changed(value):
+	$"TabContainer/3D/MarginContainer/VBoxContainer/HBoxContainer3/X".text = str(value)
+	var camera = get_parent().get_parent().get_node("Node3D/Camera3D")
+	camera.position.x = value 
+
+
+func _on_camera_yh_slider_value_changed(value):
+	$"TabContainer/3D/MarginContainer/VBoxContainer/HBoxContainer4/Y".text = str(value)
+	var camera = get_parent().get_parent().get_node("Node3D/Camera3D")
+	camera.position.y = value 
+
+
+func _on_camera_zh_slider_value_changed(value):
+	$"TabContainer/3D/MarginContainer/VBoxContainer/HBoxContainer5/Z".text = str(value)
+	var camera = get_parent().get_parent().get_node("Node3D/Camera3D")
+	camera.position.z = value 

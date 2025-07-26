@@ -395,6 +395,60 @@ access = 2
 filters = PackedStringArray("*.glb")
 use_native_dialog = true
 
+[node name="HBoxContainer3" type="HBoxContainer" parent="TabContainer/3D/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="CameraXLabel" type="Label" parent="TabContainer/3D/MarginContainer/VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+text = "CAMERAX"
+
+[node name="X" type="Label" parent="TabContainer/3D/MarginContainer/VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+text = "0"
+
+[node name="CameraXHSlider" type="HSlider" parent="TabContainer/3D/MarginContainer/VBoxContainer"]
+layout_mode = 2
+min_value = -200.0
+max_value = 200.0
+allow_greater = true
+allow_lesser = true
+
+[node name="HBoxContainer4" type="HBoxContainer" parent="TabContainer/3D/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="CameraYLabel" type="Label" parent="TabContainer/3D/MarginContainer/VBoxContainer/HBoxContainer4"]
+layout_mode = 2
+text = "CAMERAY"
+
+[node name="Y" type="Label" parent="TabContainer/3D/MarginContainer/VBoxContainer/HBoxContainer4"]
+layout_mode = 2
+text = "0"
+
+[node name="CameraYHSlider" type="HSlider" parent="TabContainer/3D/MarginContainer/VBoxContainer"]
+layout_mode = 2
+min_value = -200.0
+max_value = 200.0
+allow_greater = true
+allow_lesser = true
+
+[node name="HBoxContainer5" type="HBoxContainer" parent="TabContainer/3D/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="CameraZLabel" type="Label" parent="TabContainer/3D/MarginContainer/VBoxContainer/HBoxContainer5"]
+layout_mode = 2
+text = "CAMERAZ"
+
+[node name="Z" type="Label" parent="TabContainer/3D/MarginContainer/VBoxContainer/HBoxContainer5"]
+layout_mode = 2
+text = "0"
+
+[node name="CameraZHSlider" type="HSlider" parent="TabContainer/3D/MarginContainer/VBoxContainer"]
+layout_mode = 2
+min_value = -200.0
+max_value = 200.0
+allow_greater = true
+allow_lesser = true
+
 [node name="HSeparator" type="HSeparator" parent="TabContainer/3D/MarginContainer/VBoxContainer"]
 modulate = Color(1, 1, 1, 0)
 layout_mode = 2
@@ -426,4 +480,7 @@ always_on_top = true
 [connection signal="pressed" from="TabContainer/3D/MarginContainer/VBoxContainer/HBoxContainer/SelectButton" to="." method="_on_select_button_pressed"]
 [connection signal="pressed" from="TabContainer/3D/MarginContainer/VBoxContainer/HBoxContainer2/ClearButton" to="." method="_on_clear_button_pressed"]
 [connection signal="file_selected" from="TabContainer/3D/MarginContainer/VBoxContainer/FileDialog" to="." method="_on_file_dialog_file_selected"]
+[connection signal="value_changed" from="TabContainer/3D/MarginContainer/VBoxContainer/CameraXHSlider" to="." method="_on_camera_xh_slider_value_changed"]
+[connection signal="value_changed" from="TabContainer/3D/MarginContainer/VBoxContainer/CameraYHSlider" to="." method="_on_camera_yh_slider_value_changed"]
+[connection signal="value_changed" from="TabContainer/3D/MarginContainer/VBoxContainer/CameraZHSlider" to="." method="_on_camera_zh_slider_value_changed"]
 [connection signal="pressed" from="TabContainer/3D/MarginContainer/VBoxContainer/Save3DButton" to="." method="_on_save_3d_button_pressed"]
