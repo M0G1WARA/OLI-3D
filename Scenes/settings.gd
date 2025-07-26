@@ -215,21 +215,26 @@ func _on_save_3d_button_pressed():
 
 
 func _on_file_dialog_file_selected(path):
-	$"TabContainer/3D/MarginContainer/VBoxContainer/HBoxContainer2".show()
 	var file_name = path.get_file()
-	var destination_path = "user://"+file_name
+	var file_extension = path.get_extension()
 
 	var file = FileAccess.open(path, FileAccess.READ)
-	if file:
+	if file_extension == "glb" and file:
+		var destination_path = "user://"+file_name
 		var file_copy = FileAccess.open(destination_path, FileAccess.WRITE)
 		if file_copy:
 			var content = file.get_buffer(file.get_length()) 
 			file_copy.store_buffer(content)
+			$"TabContainer/3D/MarginContainer/VBoxContainer/HBoxContainer2/CustomModelTextEdit".text = file_name
+			$"TabContainer/3D/MarginContainer/VBoxContainer/HBoxContainer2".show()
 		else:
+			$AcceptDialog.dialog_text = tr("ERROR COPY MODEL")
+			$AcceptDialog.show()
 			file.close()
+	else:
+		$AcceptDialog.dialog_text = tr("ERROR MODEL FILE")
+		$AcceptDialog.show()
 
-	
-	$"TabContainer/3D/MarginContainer/VBoxContainer/HBoxContainer2/CustomModelTextEdit".text = file_name
 
 func _on_select_button_pressed():
 	$"TabContainer/3D/MarginContainer/VBoxContainer/FileDialog".show()

@@ -70,6 +70,8 @@ func _ready():
 	english_translation.add_message("CUSTOM MODEL", "Custom 3D model")
 	english_translation.add_message("CLEAR MODEL", "Clear custom 3D model")
 	english_translation.add_message("SELECT MODEL", "Select custom 3D model")
+	english_translation.add_message("ERROR COPY MODEL", "Failed to copy the 3D model.")
+	english_translation.add_message("ERROR MODEL FILE", "The 3D model file is invalid or corrupted.")
 	english_translation.add_message("SAVE", "Save")
 	
 	english_translation.add_message("ERROR JSON", "JSON parse error: ")
@@ -117,6 +119,8 @@ func _ready():
 	spanish_translation.add_message("CUSTOM MODEL", "Modelo 3D personalizado")
 	spanish_translation.add_message("CLEAR MODEL", "Borrar modelo 3D personalizado")
 	spanish_translation.add_message("SELECT MODEL", "Seleccionar modelo 3D personalizado")
+	english_translation.add_message("ERROR COPY MODEL", "No se pudo copiar el modelo 3D.")
+	english_translation.add_message("ERROR MODEL FILE", "El archivo del modelo 3D no es válido o está dañado.")
 	spanish_translation.add_message("SAVE", "Guardar")
 	
 	spanish_translation.add_message("ERROR JSON", "Error al analizar JSON: ")
