@@ -18,9 +18,28 @@ func _ready():
 		directions.append("left")
 	if Global.settings["interface"]["vertical movement"]:
 		directions = [ "down", "up"] if directions.size() == 1 else [ "right", "down","left", "up"]
-	var model = load(model_path) if ResourceLoader.exists(model_path) else load(default_model_path)
+	model_path = default_model_path if Global.settings["model"]["custom model"] == "" else "user://"+Global.settings["model"]["custom model"]
 	
-	modelInstance = model.instantiate()
+	var gltf_doc = GLTFDocument.new()
+	var gltf_state = GLTFState.new()
+
+	var dir_access = DirAccess.open(model_path.get_base_dir())
+	if dir_access:
+		var error = gltf_doc.append_from_file(model_path, gltf_state)
+		if error != OK:
+			print("Error GLB: ", error)
+			return
+			
+		modelInstance = gltf_doc.generate_scene(gltf_state)
+			
+		if not modelInstance:
+			print("Error: Scene.")
+			return
+			
+	else:
+		var model = load(default_model_path)
+		modelInstance = model.instantiate()
+		
 	$Node3D.add_child(modelInstance)
 	animation_player = modelInstance.get_node("AnimationPlayer")
 	
@@ -100,7 +119,6 @@ func move_window():
 
 		"right":
 			modelInstance.rotation_degrees.y = 90
-			$Node3D/Camera3D
 			animation_player.play("Walking")
 			if dragging == false and window_position.x < monitor_resolution.x-DisplayServer.window_get_size().x:
 				get_tree().root.position += Vector2i(1,0)
