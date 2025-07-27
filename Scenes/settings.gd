@@ -233,6 +233,8 @@ func _on_file_dialog_file_selected(path):
 		if file_copy:
 			var content = file.get_buffer(file.get_length()) 
 			file_copy.store_buffer(content)
+			file_copy.close()
+			load_animations(destination_path)
 			$"TabContainer/3D/MarginContainer/VBoxContainer/HBoxContainer2/CustomModelTextEdit".text = file_name
 			$"TabContainer/3D/MarginContainer/VBoxContainer/HBoxContainer2".show()
 		else:
@@ -255,6 +257,8 @@ func _on_clear_button_pressed():
 		dir_access = null
 	$"TabContainer/3D/MarginContainer/VBoxContainer/HBoxContainer2/CustomModelTextEdit".text = ""
 	$"TabContainer/3D/MarginContainer/VBoxContainer/HBoxContainer2".hide()
+	Global.settings["model"]["custom model"] = $"TabContainer/3D/MarginContainer/VBoxContainer/HBoxContainer2/CustomModelTextEdit".text
+	Global.save_config()
 
 
 func _on_camera_xh_slider_value_changed(value):
@@ -273,3 +277,22 @@ func _on_camera_zh_slider_value_changed(value):
 	$"TabContainer/3D/MarginContainer/VBoxContainer/HBoxContainer5/Z".text = str(value)
 	var camera = get_parent().get_parent().get_node("Node3D/Camera3D")
 	camera.position.z = value 
+
+func load_animations(model_path):
+	var gltf_doc = GLTFDocument.new()
+	var gltf_state = GLTFState.new()
+
+	var dir_access = DirAccess.open(model_path.get_base_dir())
+	if dir_access:
+		var error = gltf_doc.append_from_file(model_path, gltf_state)
+		if error != OK:
+			print("Error GLB: ", error)
+			return
+		
+		var animations_array = gltf_state.animations
+		var animation_count = animations_array.size()
+		
+		for i in range(animation_count):
+			var gltf_animation = animations_array[i]
+			var animation_name = gltf_animation.resource_name
+			print("- Animation " + str(i) + ": " + animation_name)
