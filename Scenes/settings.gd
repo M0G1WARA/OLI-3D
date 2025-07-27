@@ -202,19 +202,33 @@ func load_3d_settings():
 	$"TabContainer/3D/MarginContainer/VBoxContainer/CameraXHSlider".value = Global.settings["model"]["camera x"]
 	$"TabContainer/3D/MarginContainer/VBoxContainer/CameraYHSlider".value = Global.settings["model"]["camera y"]
 	$"TabContainer/3D/MarginContainer/VBoxContainer/CameraZHSlider".value = Global.settings["model"]["camera z"]
-
+	
+	load_animations("res://Assets/3D/Demo/demo.glb" if Global.settings["model"]["custom model"] == "" else "user://"+Global.settings["model"]["custom model"])
+	
+	var option_buttons = get_tree().get_nodes_in_group("animation_option_button")
+	var animation_setting_keys = ["walking","vertical", "idle","dragging","chat", "options"]
+	for index in len(option_buttons):
+		for i in range(option_buttons[index].get_item_count()):
+			if option_buttons[index].get_item_text(i) == Global.settings["model"]["animation "+animation_setting_keys[index]]:
+				option_buttons[index].select(i)
+				break
 
 func _on_save_3d_button_pressed():
 	if $"TabContainer/3D/MarginContainer/VBoxContainer/ShaderOptionButton".get_selected_id() == 0:
 		Global.settings["model"]["shader"] = "None"
 	else:
-		Global.settings["model"]["shader"] =$"TabContainer/3D/MarginContainer/VBoxContainer/ShaderOptionButton".get_item_text($"TabContainer/3D/MarginContainer/VBoxContainer/ShaderOptionButton".get_selected_id())
+		Global.settings["model"]["shader"] = $"TabContainer/3D/MarginContainer/VBoxContainer/ShaderOptionButton".get_item_text($"TabContainer/3D/MarginContainer/VBoxContainer/ShaderOptionButton".get_selected_id())
 	
 	Global.settings["model"]["custom model"] = $"TabContainer/3D/MarginContainer/VBoxContainer/HBoxContainer2/CustomModelTextEdit".text
 	
 	Global.settings["model"]["camera x"] = $"TabContainer/3D/MarginContainer/VBoxContainer/CameraXHSlider".value
 	Global.settings["model"]["camera y"] = $"TabContainer/3D/MarginContainer/VBoxContainer/CameraYHSlider".value
 	Global.settings["model"]["camera z"] = $"TabContainer/3D/MarginContainer/VBoxContainer/CameraZHSlider".value
+	
+	var option_buttons = get_tree().get_nodes_in_group("animation_option_button")
+	var animation_setting_keys = ["walking","vertical", "idle","dragging","chat", "options"]
+	for index in len(option_buttons):
+		Global.settings["model"]["animation "+animation_setting_keys[index]] = option_buttons[index].get_item_text(option_buttons[index].get_selected_id())
 	
 	Global.save_config()
 	
@@ -292,7 +306,14 @@ func load_animations(model_path):
 		var animations_array = gltf_state.animations
 		var animation_count = animations_array.size()
 		
-		for i in range(animation_count):
-			var gltf_animation = animations_array[i]
-			var animation_name = gltf_animation.resource_name
-			print("- Animation " + str(i) + ": " + animation_name)
+		var option_buttons = get_tree().get_nodes_in_group("animation_option_button")
+		
+		if animation_count > 0:
+			for option_button in option_buttons:
+				option_button.clear()
+				for i in range(animation_count):
+					var gltf_animation = animations_array[i]
+					var animation_name = gltf_animation.resource_name
+					option_button.add_item(animation_name, i)
+					option_button.select(0)
+					

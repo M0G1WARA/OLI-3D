@@ -34,6 +34,12 @@ var settings = {
 		"camera x": 0,
 		"camera y": 0,
 		"camera z": 130,
+		"animation walking": "Walking",
+		"animation vertical": "ClimbingUpWall",
+		"animation idle": "HoldingIdle",
+		"animation dragging": "FemaleDynamicPose",
+		"animation chat": "Thinking",
+		"animation options":"DwarfIdle"
 	}
 }
 

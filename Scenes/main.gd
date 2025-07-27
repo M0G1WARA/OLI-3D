@@ -64,12 +64,15 @@ func apply_shader_to_meshes(node: Node):
 func _process(_delta):
 	if moving and (Global.settings["interface"]["horizontal movement"] or Global.settings["interface"]["vertical movement"]):
 		move_window()
+	else:
+		if not animation_player.is_playing():
+			animation_player.play(Global.settings["model"]["animation idle"])
 
 
 func _input(event):
 	if event is InputEventMouseMotion and dragging:
 		modelInstance.rotation_degrees.y += 0
-		animation_player.play("FemaleDynamicPose")
+		animation_player.play(Global.settings["model"]["animation dragging"])
 		get_tree().root.position = DisplayServer.mouse_get_position() - (DisplayServer.window_get_size()/2)
 
 	if event is InputEventMouseButton:
@@ -78,7 +81,7 @@ func _input(event):
 				$PopupMenu.set_position(DisplayServer.mouse_get_position()+Vector2i(DisplayServer.window_get_size().x/2,0))
 				$PopupMenu.show()
 				modelInstance.rotation_degrees.y += 0
-				animation_player.play("DwarfIdle")
+				animation_player.play(Global.settings["model"]["animation options"])
 			elif event.pressed:
 				dragging = true
 				moving = false
@@ -93,7 +96,7 @@ func _input(event):
 func chat():
 
 	modelInstance.rotation_degrees.y = 0
-	animation_player.play("DwarfIdle(2)")
+	animation_player.play(Global.settings["model"]["animation chat"])
 	if not $ChatWindow.visible:
 		moving = false
 		$Timer.stop()
@@ -123,7 +126,7 @@ func move_window():
 
 		"right":
 			modelInstance.rotation_degrees.y = 90
-			animation_player.play("Walking")
+			animation_player.play(Global.settings["model"]["animation walking"])
 			if dragging == false and window_position.x < monitor_resolution.x-DisplayServer.window_get_size().x:
 				get_tree().root.position += Vector2i(1,0)
 
@@ -132,7 +135,7 @@ func move_window():
 		
 		"down":
 			modelInstance.rotation_degrees.y = 0
-			animation_player.play_backwards("ClimbingUpWall")
+			animation_player.play_backwards(Global.settings["model"]["animation vertical"])
 			if dragging == false and window_position.y < monitor_resolution.y-DisplayServer.window_get_size().y:
 				get_tree().root.position += Vector2i(0,1)
 				
@@ -141,7 +144,7 @@ func move_window():
 
 		"left":
 			modelInstance.rotation_degrees.y = -90
-			animation_player.play("Walking")
+			animation_player.play(Global.settings["model"]["animation walking"])
 			if dragging == false and window_position.x > 0:
 				get_tree().root.position -= Vector2i(1,0)
 
@@ -150,7 +153,7 @@ func move_window():
 		
 		"up":
 			modelInstance.rotation_degrees.y = 180
-			animation_player.play("ClimbingUpWall")
+			animation_player.play(Global.settings["model"]["animation vertical"])
 			if dragging == false and window_position.y > 0:
 				get_tree().root.position -= Vector2i(0,1)
 				
@@ -159,7 +162,7 @@ func move_window():
 
 func idle():
 	modelInstance.rotation_degrees.y = 0
-	animation_player.play("HoldingIdle")
+	animation_player.play(Global.settings["model"]["animation idle"])
 	moving = false
 	current_direction = (current_direction + 1) % directions.size()
 	$Timer.start()
@@ -168,7 +171,7 @@ func _on_timer_timeout():
 	moving = true
 	if not Global.settings["interface"]["horizontal movement"] and not Global.settings["interface"]["vertical movement"]:
 		modelInstance.rotation_degrees.y = 0
-		animation_player.play("HoldingIdle")
+		animation_player.play(Global.settings["model"]["animation idle"])
 
 func _on_popup_menu_id_pressed(id):
 	match id:
@@ -185,6 +188,9 @@ func _on_popup_menu_visibility_changed():
 
 func settings():
 	$SettingsWindow.show()
+	animation_player.play(Global.settings["model"]["animation options"])
+	$Timer.stop()
 
 func _on_settings_window_close_requested():
 	$SettingsWindow.hide()
+	$Timer.start()
