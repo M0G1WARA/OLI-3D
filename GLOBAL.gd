@@ -12,10 +12,11 @@ var settings = {
 		"horizontal movement": true,
 		"vertical movement": false,
 		"timer": 5,
-		"resolution": Vector2i(120, 120),
-		"chat scale": 2,
+		"resolution": Vector2i(200, 400),
+		"chat resolution": Vector2i(300, 300),
 		"think": false,
 		"chunked": true,
+		"edges": false
 	},
 	"prompt": {
 		"instructional prompt": ""
@@ -61,10 +62,11 @@ func _ready():
 	english_translation.add_message("VERTICAL", "Vertical Movement")
 	english_translation.add_message("TIMER", "Idle time (Seconds)")
 	english_translation.add_message("RESOLUTION", "Resolution")
-	english_translation.add_message("SCALE", "Chat scale")
+	english_translation.add_message("CHAT RESOLUTION", "Chat resolution")
 	english_translation.add_message("SHOWTHINK", "Show thinking")
 	english_translation.add_message("CHUNKED RESPONSE", "Response by chunks")
 	english_translation.add_message("COMPLETE RESPONSE", "Complete response")
+	english_translation.add_message("EDGES", "Show edges")
 	english_translation.add_message("THINK", "Think: ")
 	english_translation.add_message("RESPONSE", "Response: ")
 	english_translation.add_message("TTS STATUS", "Responses with TTS(Text To Speech)")
@@ -121,10 +123,11 @@ func _ready():
 	spanish_translation.add_message("VERTICAL", "Movimiento Vertical")
 	spanish_translation.add_message("TIMER", "Tiempo inactivo (Segundos)")
 	spanish_translation.add_message("RESOLUTION", "Resolución")
-	spanish_translation.add_message("SCALE", "Escala del chat")
+	spanish_translation.add_message("CHAT RESOLUTION", "Escala del chat")
 	spanish_translation.add_message("SHOWTHINK", "Mostrar pensamiento")
 	spanish_translation.add_message("CHUNKED RESPONSE", "Respuesta por partes")
 	spanish_translation.add_message("COMPLETE RESPONSE", "Respuesta completa")
+	spanish_translation.add_message("EDGES", "Mostrar bordes")
 	spanish_translation.add_message("THINK", "Pensamiento: ")
 	spanish_translation.add_message("RESPONSE", "Respuesta: ")
 	spanish_translation.add_message("TTS STATUS", "Respuestas con TTS (Texto a Voz)")

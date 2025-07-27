@@ -132,7 +132,14 @@ text = "RESOLUTION"
 [node name="Resolution" type="Label" parent="TabContainer/Interface/MarginContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 
-[node name="ResolutionHSlider" type="HSlider" parent="TabContainer/Interface/MarginContainer/VBoxContainer"]
+[node name="ResolutionXHSlider" type="HSlider" parent="TabContainer/Interface/MarginContainer/VBoxContainer"]
+layout_mode = 2
+min_value = 40.0
+max_value = 800.0
+step = 10.0
+value = 120.0
+
+[node name="ResolutionYHSlider" type="HSlider" parent="TabContainer/Interface/MarginContainer/VBoxContainer"]
 layout_mode = 2
 min_value = 40.0
 max_value = 800.0
@@ -142,18 +149,28 @@ value = 120.0
 [node name="HBoxContainer2" type="HBoxContainer" parent="TabContainer/Interface/MarginContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="ScaleLabel" type="Label" parent="TabContainer/Interface/MarginContainer/VBoxContainer/HBoxContainer2"]
+[node name="ChatResolutionLabel" type="Label" parent="TabContainer/Interface/MarginContainer/VBoxContainer/HBoxContainer2"]
 layout_mode = 2
-text = "SCALE"
+text = "CHAT RESOLUTION"
 
-[node name="Scale" type="Label" parent="TabContainer/Interface/MarginContainer/VBoxContainer/HBoxContainer2"]
+[node name="ChatResolution" type="Label" parent="TabContainer/Interface/MarginContainer/VBoxContainer/HBoxContainer2"]
 layout_mode = 2
 
-[node name="ScaleHSlider" type="HSlider" parent="TabContainer/Interface/MarginContainer/VBoxContainer"]
+[node name="ChatResolutionXHSlider" type="HSlider" parent="TabContainer/Interface/MarginContainer/VBoxContainer"]
 layout_mode = 2
-min_value = 1.0
-max_value = 10.0
-value = 1.0
+min_value = 40.0
+max_value = 800.0
+step = 10.0
+value = 40.0
+allow_greater = true
+
+[node name="ChatResolutionYHSlider" type="HSlider" parent="TabContainer/Interface/MarginContainer/VBoxContainer"]
+layout_mode = 2
+min_value = 40.0
+max_value = 800.0
+step = 10.0
+value = 40.0
+allow_greater = true
 
 [node name="ThinkCheckButton" type="CheckButton" parent="TabContainer/Interface/MarginContainer/VBoxContainer"]
 layout_mode = 2
@@ -173,6 +190,21 @@ layout_mode = 2
 [node name="Label2" type="Label" parent="TabContainer/Interface/MarginContainer/VBoxContainer/HBoxContainer3"]
 layout_mode = 2
 text = "CHUNKED RESPONSE"
+
+[node name="HBoxContainer4" type="HBoxContainer" parent="TabContainer/Interface/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="TabContainer/Interface/MarginContainer/VBoxContainer/HBoxContainer4"]
+layout_mode = 2
+text = "EDGES"
+
+[node name="VSeparator" type="VSeparator" parent="TabContainer/Interface/MarginContainer/VBoxContainer/HBoxContainer4"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="BorderCheckButton" type="CheckButton" parent="TabContainer/Interface/MarginContainer/VBoxContainer/HBoxContainer4"]
+layout_mode = 2
 
 [node name="HSeparator" type="HSeparator" parent="TabContainer/Interface/MarginContainer/VBoxContainer"]
 modulate = Color(1, 1, 1, 0)
@@ -565,10 +597,14 @@ transient = false
 always_on_top = true
 
 [connection signal="draw" from="." to="." method="_on_draw"]
+[connection signal="hidden" from="." to="." method="_on_hidden"]
 [connection signal="pressed" from="TabContainer/Ollama/MarginContainer/VBoxContainer/SaveButton" to="." method="_on_save_button_pressed"]
 [connection signal="request_completed" from="TabContainer/Ollama/HTTPRequest" to="." method="_on_http_request_request_completed"]
-[connection signal="value_changed" from="TabContainer/Interface/MarginContainer/VBoxContainer/ResolutionHSlider" to="." method="_on_resolution_h_slider_value_changed"]
-[connection signal="value_changed" from="TabContainer/Interface/MarginContainer/VBoxContainer/ScaleHSlider" to="." method="_on_scale_h_slider_value_changed"]
+[connection signal="value_changed" from="TabContainer/Interface/MarginContainer/VBoxContainer/ResolutionXHSlider" to="." method="_on_resolution_xh_slider_value_changed"]
+[connection signal="value_changed" from="TabContainer/Interface/MarginContainer/VBoxContainer/ResolutionYHSlider" to="." method="_on_resolution_yh_slider_value_changed"]
+[connection signal="value_changed" from="TabContainer/Interface/MarginContainer/VBoxContainer/ChatResolutionXHSlider" to="." method="_on_resolution_chat_xh_slider_value_changed"]
+[connection signal="value_changed" from="TabContainer/Interface/MarginContainer/VBoxContainer/ChatResolutionYHSlider" to="." method="_on_chat_resolution_yh_slider_value_changed"]
+[connection signal="pressed" from="TabContainer/Interface/MarginContainer/VBoxContainer/HBoxContainer4/BorderCheckButton" to="." method="_on_border_check_button_pressed"]
 [connection signal="pressed" from="TabContainer/Interface/MarginContainer/VBoxContainer/SaveInterfaceButton" to="." method="_on_save_interface_button_pressed"]
 [connection signal="pressed" from="TabContainer/Prompt/MarginContainer/VBoxContainer/SavePromptButton" to="." method="_on_save_prompt_button_pressed"]
 [connection signal="value_changed" from="TabContainer/TTS/MarginContainer/VBoxContainer/RateHSlider" to="." method="_on_rate_h_slider_value_changed"]

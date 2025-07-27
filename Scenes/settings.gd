@@ -42,16 +42,19 @@ func load_interface_settings():
 	$TabContainer/Interface/MarginContainer/VBoxContainer/CheckButtonVertical.button_pressed = Global.settings["interface"]["vertical movement"]
 	$TabContainer/Interface/MarginContainer/VBoxContainer/SpinBox.value = Global.settings["interface"]["timer"]
 	
-	var resolution = Global.settings["interface"]["resolution"].x
-	$TabContainer/Interface/MarginContainer/VBoxContainer/HBoxContainer/Resolution.text = str(resolution) +" x "+ str(resolution)
-	$TabContainer/Interface/MarginContainer/VBoxContainer/ResolutionHSlider.value = resolution
+	var resolution = Global.settings["interface"]["resolution"]
+	$TabContainer/Interface/MarginContainer/VBoxContainer/HBoxContainer/Resolution.text = str(resolution.x) +" x "+ str(resolution.y)
+	$TabContainer/Interface/MarginContainer/VBoxContainer/ResolutionXHSlider.value = resolution.x
+	$TabContainer/Interface/MarginContainer/VBoxContainer/ResolutionYHSlider.value = resolution.y
 	
-	var chatScale = Global.settings["interface"]["chat scale"]
-	$TabContainer/Interface/MarginContainer/VBoxContainer/HBoxContainer2/Scale.text = str(chatScale)+" ("+str(chatScale*resolution)+" x "+str(chatScale*resolution)+")" 
-	$TabContainer/Interface/MarginContainer/VBoxContainer/ScaleHSlider.value = Global.settings["interface"]["chat scale"]
+	var chatResolution = Global.settings["interface"]["chat resolution"]
+	$TabContainer/Interface/MarginContainer/VBoxContainer/HBoxContainer2/ChatResolution.text = str(chatResolution.x)+" x "+str(chatResolution.y) 
+	$TabContainer/Interface/MarginContainer/VBoxContainer/ChatResolutionXHSlider.value = chatResolution.x
+	$TabContainer/Interface/MarginContainer/VBoxContainer/ChatResolutionYHSlider.value = chatResolution.y
 	
 	$TabContainer/Interface/MarginContainer/VBoxContainer/ThinkCheckButton.button_pressed = Global.settings["interface"]["think"]
 	$TabContainer/Interface/MarginContainer/VBoxContainer/HBoxContainer3/ResponseCheckButton.button_pressed = Global.settings["interface"]["chunked"]
+	$TabContainer/Interface/MarginContainer/VBoxContainer/HBoxContainer4/BorderCheckButton.button_pressed = Global.settings["interface"]["edges"]
 	
 
 func load_prompt_settings():
@@ -69,25 +72,16 @@ func _on_save_interface_button_pressed():
 	Global.settings["interface"]["horizontal movement"] = $TabContainer/Interface/MarginContainer/VBoxContainer/CheckButtonHorizontal.button_pressed
 	Global.settings["interface"]["vertical movement"] = $TabContainer/Interface/MarginContainer/VBoxContainer/CheckButtonVertical.button_pressed
 	Global.settings["interface"]["timer"] = $TabContainer/Interface/MarginContainer/VBoxContainer/SpinBox.value
-	var tmpResolution = $TabContainer/Interface/MarginContainer/VBoxContainer/ResolutionHSlider.value
-	Global.settings["interface"]["resolution"] = Vector2i(tmpResolution,tmpResolution)
-	Global.settings["interface"]["chat scale"] = $TabContainer/Interface/MarginContainer/VBoxContainer/ScaleHSlider.value
+	var tmpResolutionx = $TabContainer/Interface/MarginContainer/VBoxContainer/ResolutionXHSlider.value
+	var tmpResolutionY = $TabContainer/Interface/MarginContainer/VBoxContainer/ResolutionYHSlider.value
+	Global.settings["interface"]["resolution"] = Vector2i(tmpResolutionx,tmpResolutionY)
+	var tmpChatResolutionx = $TabContainer/Interface/MarginContainer/VBoxContainer/ChatResolutionXHSlider.value
+	var tmpChatResolutionY = $TabContainer/Interface/MarginContainer/VBoxContainer/ChatResolutionYHSlider.value
+	Global.settings["interface"]["chat resolution"] = Vector2i(tmpChatResolutionx,tmpChatResolutionY)
 	Global.settings["interface"]["think"] = $TabContainer/Interface/MarginContainer/VBoxContainer/ThinkCheckButton.button_pressed
 	Global.settings["interface"]["chunked"] = $TabContainer/Interface/MarginContainer/VBoxContainer/HBoxContainer3/ResponseCheckButton.button_pressed
+	Global.settings["interface"]["edges"] = $TabContainer/Interface/MarginContainer/VBoxContainer/HBoxContainer4/BorderCheckButton.button_pressed
 	Global.save_config()
-
-
-func _on_resolution_h_slider_value_changed(value):
-	var tmpScale = $TabContainer/Interface/MarginContainer/VBoxContainer/ScaleHSlider.value
-	$TabContainer/Interface/MarginContainer/VBoxContainer/ScaleHSlider.emit_signal("value_changed",tmpScale)
-	var tmpResolution = str($TabContainer/Interface/MarginContainer/VBoxContainer/ResolutionHSlider.value)
-	$TabContainer/Interface/MarginContainer/VBoxContainer/HBoxContainer/Resolution.text = tmpResolution +" x "+ tmpResolution
-
-
-func _on_scale_h_slider_value_changed(value):
-	var tmpResolution = $TabContainer/Interface/MarginContainer/VBoxContainer/ResolutionHSlider.value
-	var tmpScale = $TabContainer/Interface/MarginContainer/VBoxContainer/ScaleHSlider.value
-	$TabContainer/Interface/MarginContainer/VBoxContainer/HBoxContainer2/Scale.text = str(tmpScale)+" ("+str(tmpScale*tmpResolution)+" x "+str(tmpScale*tmpResolution)+")" 
 
 
 func _on_draw():
@@ -168,7 +162,16 @@ func _on_volume_h_slider_value_changed(value: float) -> void:
 
 
 func _on_save_tts_button_pressed() -> void:
-	Global.settings["tts"]["status"] = $TabContainer/TTS/MarginContainer/VBoxContainer/CheckButton.button_pressed
+	var voice_selected = $TabContainer/TTS/MarginContainer/VBoxContainer/VoicesItemList.get_item_metadata($TabContainer/TTS/MarginContainer/VBoxContainer/VoicesItemList.get_selected_items()[0])if $TabContainer/TTS/MarginContainer/VBoxContainer/VoicesItemList.get_selected_items().size() > 0 else ""
+	if $TabContainer/TTS/MarginContainer/VBoxContainer/CheckButton.button_pressed:
+		if voice_selected != "":
+			Global.settings["tts"]["status"] = $TabContainer/TTS/MarginContainer/VBoxContainer/CheckButton.button_pressed
+		else:
+			$AcceptDialog.dialog_text = tr("ERROR SELECTED VOICE")
+			$AcceptDialog.show()
+	else:
+		Global.settings["tts"]["status"] = $TabContainer/TTS/MarginContainer/VBoxContainer/CheckButton.button_pressed
+	
 	Global.settings["tts"]["id"] = $TabContainer/TTS/MarginContainer/VBoxContainer/VoicesItemList.get_item_metadata($TabContainer/TTS/MarginContainer/VBoxContainer/VoicesItemList.get_selected_items()[0])if $TabContainer/TTS/MarginContainer/VBoxContainer/VoicesItemList.get_selected_items().size() > 0 else ""
 	Global.settings["tts"]["rate"] = $TabContainer/TTS/MarginContainer/VBoxContainer/RateHSlider.value
 	Global.settings["tts"]["volume"] = $TabContainer/TTS/MarginContainer/VBoxContainer/VolumeHSlider.value
@@ -322,3 +325,38 @@ func load_animations(model_path):
 			$"TabContainer/3D/MarginContainer/VBoxContainer/HBoxContainer2".hide()
 			$AcceptDialog.dialog_text = tr("ERROR EMPTY ANIMATIONS" + str(error))
 			$AcceptDialog.show()
+
+
+func _on_border_check_button_pressed():
+	get_parent().get_parent().get_node("CanvasLayer").visible = $TabContainer/Interface/MarginContainer/VBoxContainer/HBoxContainer4/BorderCheckButton.button_pressed
+
+
+func _on_hidden():
+	get_parent().get_parent().get_node("CanvasLayer").visible = Global.settings["interface"]["edges"]
+	DisplayServer.window_set_size(Global.settings["interface"]["resolution"])
+
+
+func _on_resolution_xh_slider_value_changed(value):
+	var tmpResolutionX = $TabContainer/Interface/MarginContainer/VBoxContainer/ResolutionXHSlider.value
+	var tmpResolutionY = $TabContainer/Interface/MarginContainer/VBoxContainer/ResolutionYHSlider.value
+	$TabContainer/Interface/MarginContainer/VBoxContainer/HBoxContainer/Resolution.text = str(tmpResolutionX) +" x "+ str(tmpResolutionY)
+	DisplayServer.window_set_size(Vector2i(tmpResolutionX, tmpResolutionY))
+
+
+func _on_resolution_yh_slider_value_changed(value):
+	var tmpResolutionX = $TabContainer/Interface/MarginContainer/VBoxContainer/ResolutionXHSlider.value
+	var tmpResolutionY = $TabContainer/Interface/MarginContainer/VBoxContainer/ResolutionYHSlider.value
+	$TabContainer/Interface/MarginContainer/VBoxContainer/HBoxContainer/Resolution.text = str(tmpResolutionX) +" x "+ str(tmpResolutionY)
+	DisplayServer.window_set_size(Vector2i(tmpResolutionX, tmpResolutionY))
+
+
+func _on_resolution_chat_xh_slider_value_changed(value):
+	var tmpChatResolutionX = $TabContainer/Interface/MarginContainer/VBoxContainer/ChatResolutionXHSlider.value
+	var tmpChatResolutionY = $TabContainer/Interface/MarginContainer/VBoxContainer/ChatResolutionYHSlider.value
+	$TabContainer/Interface/MarginContainer/VBoxContainer/HBoxContainer2/ChatResolution.text = str(tmpChatResolutionX)+" x "+str(tmpChatResolutionY) 
+
+
+func _on_chat_resolution_yh_slider_value_changed(value):
+	var tmpChatResolutionX = $TabContainer/Interface/MarginContainer/VBoxContainer/ChatResolutionXHSlider.value
+	var tmpChatResolutionY = $TabContainer/Interface/MarginContainer/VBoxContainer/ChatResolutionYHSlider.value
+	$TabContainer/Interface/MarginContainer/VBoxContainer/HBoxContainer2/ChatResolution.text = str(tmpChatResolutionX)+" x "+str(tmpChatResolutionY) 

@@ -49,6 +49,9 @@ func _ready():
 	$Node3D/Camera3D.position.x = Global.settings["model"]["camera x"]
 	$Node3D/Camera3D.position.y = Global.settings["model"]["camera y"]
 	$Node3D/Camera3D.position.z = Global.settings["model"]["camera z"]
+	
+	if Global.settings["interface"]["edges"]:
+		$CanvasLayer.show()
 
 
 func apply_shader_to_meshes(node: Node):
@@ -106,9 +109,9 @@ func chat():
 		var window_position = DisplayServer.window_get_position()
 		
 		$ChatWindow.show()
-		$ChatWindow.size = Vector2(DisplayServer.window_get_size()*Global.settings["interface"]["chat scale"]) 
+		$ChatWindow.size = Vector2(Global.settings["interface"]["chat resolution"].x, Global.settings["interface"]["chat resolution"].y) 
 		if window_position.x >= monitor_resolution.x/2:
-			$ChatWindow.position = Vector2(window_position.x - DisplayServer.window_get_size().x*Global.settings["interface"]["chat scale"] , window_position.y)
+			$ChatWindow.position = Vector2(window_position.x - Global.settings["interface"]["chat resolution"].x , window_position.y)
 		else:
 			$ChatWindow.position = Vector2(window_position.x + DisplayServer.window_get_size().x, window_position.y)
 		
