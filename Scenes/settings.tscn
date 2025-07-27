@@ -397,7 +397,7 @@ always_on_top = true
 ok_button_text = "SELECT MODEL"
 file_mode = 0
 access = 2
-filters = PackedStringArray("*.glb")
+filters = PackedStringArray("*.glb", "*.gltf")
 use_native_dialog = true
 
 [node name="HBoxContainer3" type="HBoxContainer" parent="TabContainer/3D/MarginContainer/VBoxContainer"]

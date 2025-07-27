@@ -241,16 +241,16 @@ func _on_file_dialog_file_selected(path):
 	var file_extension = path.get_extension()
 
 	var file = FileAccess.open(path, FileAccess.READ)
-	if file_extension == "glb" and file:
+	if (file_extension == "glb" or file_extension == "gltf") and file:
 		var destination_path = "user://"+file_name
 		var file_copy = FileAccess.open(destination_path, FileAccess.WRITE)
 		if file_copy:
 			var content = file.get_buffer(file.get_length()) 
 			file_copy.store_buffer(content)
 			file_copy.close()
-			load_animations(destination_path)
 			$"TabContainer/3D/MarginContainer/VBoxContainer/HBoxContainer2/CustomModelTextEdit".text = file_name
 			$"TabContainer/3D/MarginContainer/VBoxContainer/HBoxContainer2".show()
+			load_animations(destination_path)
 		else:
 			$AcceptDialog.dialog_text = tr("ERROR COPY MODEL")
 			$AcceptDialog.show()
@@ -300,7 +300,8 @@ func load_animations(model_path):
 	if dir_access:
 		var error = gltf_doc.append_from_file(model_path, gltf_state)
 		if error != OK:
-			print("Error GLB: ", error)
+			$AcceptDialog.dialog_text = tr("ERROR MODEL FILE" + str(error))
+			$AcceptDialog.show()
 			return
 		
 		var animations_array = gltf_state.animations
@@ -316,4 +317,8 @@ func load_animations(model_path):
 					var animation_name = gltf_animation.resource_name
 					option_button.add_item(animation_name, i)
 					option_button.select(0)
-					
+		else:
+			$"TabContainer/3D/MarginContainer/VBoxContainer/HBoxContainer2/CustomModelTextEdit".text = ""
+			$"TabContainer/3D/MarginContainer/VBoxContainer/HBoxContainer2".hide()
+			$AcceptDialog.dialog_text = tr("ERROR EMPTY ANIMATIONS" + str(error))
+			$AcceptDialog.show()
