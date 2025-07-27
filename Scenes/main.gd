@@ -22,12 +22,16 @@ func _ready():
 	
 	var gltf_doc = GLTFDocument.new()
 	var gltf_state = GLTFState.new()
-
+	
+	var file_exists = FileAccess.file_exists(model_path)
+	
 	var dir_access = DirAccess.open(model_path.get_base_dir())
-	if dir_access:
+	if file_exists and dir_access:
 		var error = gltf_doc.append_from_file(model_path, gltf_state)
 		if error != OK:
 			print("Error GLB: ", error)
+			var model = load(default_model_path)
+			modelInstance = model.instantiate()
 			return
 			
 		modelInstance = gltf_doc.generate_scene(gltf_state)

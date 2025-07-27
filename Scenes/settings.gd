@@ -275,6 +275,7 @@ func _on_clear_button_pressed():
 	$"TabContainer/3D/MarginContainer/VBoxContainer/HBoxContainer2/CustomModelTextEdit".text = ""
 	$"TabContainer/3D/MarginContainer/VBoxContainer/HBoxContainer2".hide()
 	Global.settings["model"]["custom model"] = $"TabContainer/3D/MarginContainer/VBoxContainer/HBoxContainer2/CustomModelTextEdit".text
+	load_animations("res://Assets/3D/Demo/demo.glb")
 	Global.save_config()
 
 
