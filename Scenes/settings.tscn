@@ -420,13 +420,13 @@ layout_mode = 2
 text = "CLEAR MODEL"
 
 [node name="FileDialog" type="FileDialog" parent="TabContainer/3D/MarginContainer/VBoxContainer"]
-title = "SELECT MODEL"
+title = "Open a File"
 initial_position = 4
 wrap_controls = false
 transient = false
 exclusive = false
 always_on_top = true
-ok_button_text = "SELECT MODEL"
+ok_button_text = "Open"
 file_mode = 0
 access = 2
 filters = PackedStringArray("*.glb", "*.gltf")
