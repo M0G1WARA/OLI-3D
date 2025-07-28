@@ -94,6 +94,7 @@ func _ready():
 	english_translation.add_message("ANIMATION DRAGGING", "Dragging Animation")
 	english_translation.add_message("ANIMATION CHAT", "Chat Opening Animation")
 	english_translation.add_message("ANIMATION OPTIONS", "Settings Menu Animation")
+	english_translation.add_message("RESTORE DEFAULT MODEL", "Restore default model")
 	english_translation.add_message("SAVE", "Save")
 	
 	english_translation.add_message("ERROR JSON", "JSON parse error: ")
@@ -155,6 +156,7 @@ func _ready():
 	spanish_translation.add_message("ANIMATION DRAGGING", "Animación al arrastrar")
 	spanish_translation.add_message("ANIMATION CHAT", "Animación al abrir Chat")
 	spanish_translation.add_message("ANIMATION OPTIONS", "Animación al abrir el menú Opciones")
+	spanish_translation.add_message("RESTORE DEFAULT MODEL", "Restablecer modelo predefinido")
 	spanish_translation.add_message("SAVE", "Guardar")
 	
 	spanish_translation.add_message("ERROR JSON", "Error al analizar JSON: ")

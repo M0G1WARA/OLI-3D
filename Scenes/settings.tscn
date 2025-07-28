@@ -447,6 +447,7 @@ text = "0"
 layout_mode = 2
 min_value = -200.0
 max_value = 200.0
+step = 0.5
 allow_greater = true
 allow_lesser = true
 
@@ -465,6 +466,7 @@ text = "0"
 layout_mode = 2
 min_value = -200.0
 max_value = 200.0
+step = 0.5
 allow_greater = true
 allow_lesser = true
 
@@ -483,6 +485,7 @@ text = "0"
 layout_mode = 2
 min_value = -200.0
 max_value = 200.0
+step = 0.5
 allow_greater = true
 allow_lesser = true
 
@@ -585,6 +588,10 @@ modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 size_flags_vertical = 3
 
+[node name="Restore3DButton" type="Button" parent="TabContainer/3D/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "RESTORE DEFAULT MODEL"
+
 [node name="Save3DButton" type="Button" parent="TabContainer/3D/MarginContainer/VBoxContainer"]
 layout_mode = 2
 text = "SAVE"
@@ -618,4 +625,5 @@ always_on_top = true
 [connection signal="value_changed" from="TabContainer/3D/MarginContainer/VBoxContainer/CameraXHSlider" to="." method="_on_camera_xh_slider_value_changed"]
 [connection signal="value_changed" from="TabContainer/3D/MarginContainer/VBoxContainer/CameraYHSlider" to="." method="_on_camera_yh_slider_value_changed"]
 [connection signal="value_changed" from="TabContainer/3D/MarginContainer/VBoxContainer/CameraZHSlider" to="." method="_on_camera_zh_slider_value_changed"]
+[connection signal="pressed" from="TabContainer/3D/MarginContainer/VBoxContainer/Restore3DButton" to="." method="_on_restore_3d_button_pressed"]
 [connection signal="pressed" from="TabContainer/3D/MarginContainer/VBoxContainer/Save3DButton" to="." method="_on_save_3d_button_pressed"]

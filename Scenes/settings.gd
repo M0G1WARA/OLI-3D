@@ -267,16 +267,7 @@ func _on_select_button_pressed():
 	$"TabContainer/3D/MarginContainer/VBoxContainer/FileDialog".show()
 
 func _on_clear_button_pressed():
-	var file_path = "user://"+$"TabContainer/3D/MarginContainer/VBoxContainer/HBoxContainer2/CustomModelTextEdit".text
-	var dir_access = DirAccess.open(file_path.get_base_dir())
-	if dir_access:
-		dir_access.remove(file_path.get_file())
-		dir_access = null
-	$"TabContainer/3D/MarginContainer/VBoxContainer/HBoxContainer2/CustomModelTextEdit".text = ""
-	$"TabContainer/3D/MarginContainer/VBoxContainer/HBoxContainer2".hide()
-	Global.settings["model"]["custom model"] = $"TabContainer/3D/MarginContainer/VBoxContainer/HBoxContainer2/CustomModelTextEdit".text
-	load_animations("res://Assets/3D/Demo/demo.glb")
-	Global.save_config()
+	_on_restore_3d_button_pressed()
 
 
 func _on_camera_xh_slider_value_changed(value):
@@ -300,32 +291,54 @@ func load_animations(model_path):
 	var gltf_doc = GLTFDocument.new()
 	var gltf_state = GLTFState.new()
 
+	var file_exists = FileAccess.file_exists(model_path)
 	var dir_access = DirAccess.open(model_path.get_base_dir())
-	if dir_access:
+
+	var animations_array
+	var animation_count
+
+	if file_exists and dir_access:
 		var error = gltf_doc.append_from_file(model_path, gltf_state)
 		if error != OK:
-			$AcceptDialog.dialog_text = tr("ERROR MODEL FILE" + str(error))
+			$AcceptDialog.dialog_text += tr("ERROR MODEL FILE") + str(error)
 			$AcceptDialog.show()
 			return
-		
-		var animations_array = gltf_state.animations
-		var animation_count = animations_array.size()
-		
-		var option_buttons = get_tree().get_nodes_in_group("animation_option_button")
-		
-		if animation_count > 0:
-			for option_button in option_buttons:
-				option_button.clear()
-				for i in range(animation_count):
-					var gltf_animation = animations_array[i]
-					var animation_name = gltf_animation.resource_name
-					option_button.add_item(animation_name, i)
-					option_button.select(0)
+
+		animations_array = gltf_state.animations
+		animation_count = animations_array.size()
+	else:
+		var scene = load(model_path) as PackedScene
+		if scene:
+			var instance = scene.instantiate() as Node3D
+			var animation_player = instance.get_node("AnimationPlayer")
+
+			if animation_player:
+				animations_array = animation_player.get_animation_list()
+				animation_count = animations_array.size()
+			else:
+				$AcceptDialog.dialog_text = tr("ERROR EMPTY ANIMATIONS")
+				$AcceptDialog.show()
 		else:
-			$"TabContainer/3D/MarginContainer/VBoxContainer/HBoxContainer2/CustomModelTextEdit".text = ""
-			$"TabContainer/3D/MarginContainer/VBoxContainer/HBoxContainer2".hide()
-			$AcceptDialog.dialog_text = tr("ERROR EMPTY ANIMATIONS" + str(error))
+			$AcceptDialog.dialog_text += tr("ERROR MODEL FILE")
 			$AcceptDialog.show()
+
+	if animation_count > 0:
+		var option_buttons = get_tree().get_nodes_in_group("animation_option_button")
+		for option_button in option_buttons:
+			option_button.clear()
+			for i in range(animation_count):
+				var animation_name
+				if animations_array[i] is GLTFAnimation:
+					animation_name = animations_array[i].resource_name
+				else:
+					animation_name = animations_array[i]
+				option_button.add_item(animation_name, i)
+			option_button.select(0)
+	else:
+		$"TabContainer/3D/MarginContainer/VBoxContainer/HBoxContainer2/CustomModelTextEdit".text = ""
+		$"TabContainer/3D/MarginContainer/VBoxContainer/HBoxContainer2".hide()
+		$AcceptDialog.dialog_text = tr("ERROR EMPTY ANIMATIONS")
+		$AcceptDialog.show()
 
 
 func _on_border_check_button_pressed():
@@ -361,3 +374,32 @@ func _on_chat_resolution_yh_slider_value_changed(value):
 	var tmpChatResolutionX = $TabContainer/Interface/MarginContainer/VBoxContainer/ChatResolutionXHSlider.value
 	var tmpChatResolutionY = $TabContainer/Interface/MarginContainer/VBoxContainer/ChatResolutionYHSlider.value
 	$TabContainer/Interface/MarginContainer/VBoxContainer/HBoxContainer2/ChatResolution.text = str(tmpChatResolutionX)+" x "+str(tmpChatResolutionY) 
+
+
+func _on_restore_3d_button_pressed():
+	$"TabContainer/3D/MarginContainer/VBoxContainer/ShaderOptionButton".selected = 0
+	if $"TabContainer/3D/MarginContainer/VBoxContainer/HBoxContainer2/CustomModelTextEdit".text != "":
+		$"TabContainer/3D/MarginContainer/VBoxContainer/HBoxContainer2/CustomModelTextEdit".text = ""
+		$"TabContainer/3D/MarginContainer/VBoxContainer/HBoxContainer2".hide()
+		var file_path = "user://"+$"TabContainer/3D/MarginContainer/VBoxContainer/HBoxContainer2/CustomModelTextEdit".text
+		var file_exists = FileAccess.file_exists(file_path)
+		var dir_access = DirAccess.open(file_path.get_base_dir())
+		if file_exists and dir_access:
+			dir_access.remove(file_path.get_file())
+			dir_access = null
+
+	load_animations("res://Assets/3D/Demo/demo.glb")
+	
+	$"TabContainer/3D/MarginContainer/VBoxContainer/CameraXHSlider".value = 0
+	$"TabContainer/3D/MarginContainer/VBoxContainer/CameraYHSlider".value = 0
+	$"TabContainer/3D/MarginContainer/VBoxContainer/CameraZHSlider".value = 130
+	
+	var default_animations = ["Walking","ClimbingUpWall", "HoldingIdle","FemaleDynamicPose","Thinking", "DwarfIdle"]
+	var option_buttons = get_tree().get_nodes_in_group("animation_option_button")
+	for index in range(len(option_buttons)):
+		for i in range(option_buttons[index].get_item_count()):
+			if option_buttons[index].get_item_text(i) == default_animations[index]:
+				option_buttons[index].select(i)
+				break
+				
+	_on_save_3d_button_pressed()
