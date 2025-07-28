@@ -1,5 +1,6 @@
-# OLI (Ollama Local Interface)
- [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/M0G1WARA/oli/blob/main/LICENSE)
+# OLI-3D (Ollama Local Interface 3D)
+
+[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/M0G1WARA/oli/blob/main/LICENSE)
 
 An interactive desktop pet that will keep you company while you work or study. This application features a virtual pet that moves around your desktop, and provides an interface to interact with Ollama.
 
@@ -11,11 +12,15 @@ An interactive desktop pet that will keep you company while you work or study. T
 - Right-click to open chat
 - Left-click + drag to move on screen
 - Double left-click for settings and to quit
+- 
+[![video](https://img.youtube.com/vi/A2heMqUW_ts/0.jpg)](https://youtu.be/A2heMqUW_ts)
 
-## Credits
-- Art - [Daniel Eddeland](https://opengameart.org/content/lpc-style-farm-animals)
+![chat](https://img.itch.zone/aW1hZ2UvMzc1NzAwMi8yMjM2MzgwOC5qcGc=/original/oQRiba.jpg)
+![ollama](https://img.itch.zone/aW1hZ2UvMzc1NzAwMi8yMjM2Mzc5OS5qcGc=/original/7aesVG.jpg)
+![interface](https://img.itch.zone/aW1hZ2UvMzc1NzAwMi8yMjM2MzgwMS5qcGc=/original/wL%2BMk%2F.jpg)
+![prompt](https://img.itch.zone/aW1hZ2UvMzc1NzAwMi8yMjM2MzgwMi5qcGc=/original/HttHlQ.jpg)
+![tts](https://img.itch.zone/aW1hZ2UvMzc1NzAwMi8yMjM2MzgwMy5qcGc=/original/PwXeN1.jpg)
+![3d](https://img.itch.zone/aW1hZ2UvMzc1NzAwMi8yMjM2MzgwNy5qcGc=/original/HMDOQq.jpg)
+![custom model](https://img.itch.zone/aW1hZ2UvMzc1NzAwMi8yMjM2MzgxMS5qcGc=/original/vk8s3v.jpg)
 
-![gif](https://img.itch.zone/aW1hZ2UvMzM2MTQyMy8yMDA3MDM1NC5naWY=/original/K8B%2BNa.gif)
-![interface](https://img.itch.zone/aW1hZ2UvMzM2MTQyMy8yMDA3MDM3Ny5qcGc=/original/PKE5Yq.jpg)
-![ollama](https://img.itch.zone/aW1hZ2UvMzM2MTQyMy8yMDA3MDM3Ni5qcGc=/original/EQ23xC.jpg)
-![chat](https://img.itch.zone/aW1hZ2UvMzM2MTQyMy8yMDA3MDM3NS5qcGc=/original/RGTzTz.jpg)
+> Note: `The custom 3D model needs to be a .glb file and include at least one animation.`
